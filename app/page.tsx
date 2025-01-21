@@ -1,32 +1,30 @@
 import Image from "next/image";
-import {
-  RegisterLink,
-  LoginLink,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+
 import { Button } from "@/components/ui/button";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function Home() {
-  const { getUser } = getKindeServerSession();
-  const session = await getUser();
   return (
     <div className="p-10">
-      <h1>home</h1>
-      {session ? (
-        <LogoutLink>
-          <Button>Logout</Button>
-        </LogoutLink>
-      ) : (
-        <div>
-          <Button>
-            <RegisterLink>Register</RegisterLink>
-          </Button>
-          <Button>
-            <LoginLink>Login</LoginLink>
-          </Button>
-        </div>
-      )}
+      <div className="relative flex gap-3">
+        <SignedIn>
+          <Link
+            href="/dashboard"
+            className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold"
+          >
+            Dashboard
+          </Link>
+        </SignedIn>
+        <SignedOut>
+          <SignInButton>
+            <button className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold">
+              Sign in
+            </button>
+          </SignInButton>
+        </SignedOut>
+      </div>
     </div>
   );
 }

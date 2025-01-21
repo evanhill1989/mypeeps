@@ -1,52 +1,44 @@
-import Link from "next/link";
-import Image from "next/image";
-import { ReactNode } from "react";
-import Logo from "@/public/logo.svg";
-import { DashboardItems } from "../components/dashboard/DashboardItems";
-import { DollarSign, Globe, Home } from "lucide-react";
-import { ModeToggle } from "../components/ModeToggle";
+import { UserDetails } from "../components/dashboard/user-details";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { CodeSwitcher } from "../components/dashboard/code-switcher";
 
-export const navLinks = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: Home,
-  },
-  {
-    name: "Sites",
-    href: "/dashboard/sites",
-    icon: Globe,
-  },
-  { name: "Pricing", href: "/dashboard/pricing", icon: DollarSign },
-];
-
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default async function DashboardPage() {
   return (
-    <section className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Image src={Logo} alt="logo" className="h-8 w-8" />
-              <h3 className="text-2xl">
-                My<span className="text-primary font-bold">Peeps</span>
-              </h3>
-            </Link>
+    <>
+      <main className="max-w-[75rem] w-full mx-auto">
+        <div className="grid grid-cols-[1fr_20.5rem] gap-10 pb-10">
+          <div>
+            <header className="flex items-center justify-between w-full h-16 gap-4">
+              <div className="flex gap-4">
+                {/* <ClerkLogo /> */}
+                <div aria-hidden className="w-px h-6 bg-[#C7C7C8]" />
+                {/* <NextLogo /> */}
+              </div>
+              <div className="flex items-center gap-2">
+                <OrganizationSwitcher
+                  appearance={{
+                    elements: {
+                      organizationPreviewAvatarBox: "size-6",
+                    },
+                  }}
+                />
+                <UserButton
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: "size-6",
+                    },
+                  }}
+                />
+              </div>
+            </header>
+            <UserDetails />
           </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-2 font-medium lgp:px-4">
-              <DashboardItems />
-            </nav>
+          <div className="pt-[3.5rem]">
+            <CodeSwitcher />
           </div>
         </div>
-      </div>
-      <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-          <div className="ml-auto flex items-center gap-x-5">
-            <ModeToggle></ModeToggle>
-          </div>
-        </header>
-      </div>
-    </section>
+      </main>
+    </>
   );
 }
