@@ -1,77 +1,73 @@
+// import {
+//   Card,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import { EmptyState } from "../components/dashboard/EmptyState";
 import { prisma } from "@/lib/prisma";
-import { requireUser } from "../utils/requireUser";
-import { EmptyState } from "@/components/dashboard/EmptyState";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
-import DefaultImage from "@/public/default.png";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+// import { requireUser } from "../utils/requireUser";
+// import SitesRoute from "./sites/page";
+// import Image from "next/image";
+// import Defaultimage from "@/public/default.png";
+// import { Button } from "@/components/ui/button";
+// import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
 async function getData(userId: string) {
-  const [listings, articles] = await Promise.all([
-    prisma.listing.findMany({
+  const [sites, articles] = await Promise.all([
+    prisma.site.findMany({
       where: {
         userId: userId,
       },
-
       orderBy: {
         createdAt: "desc",
       },
-
       take: 3,
     }),
-
     prisma.post.findMany({
       where: {
         userId: userId,
       },
-
       orderBy: {
         createdAt: "desc",
       },
-
       take: 3,
     }),
   ]);
 
-  return {
-    listings,
-    articles,
-  };
+  return { sites, articles };
 }
-export default async function DashboardIndexPage({}) {
-  const user = await requireUser();
-  const { listings, articles } = await getData(user.id);
+
+export default async function DashboardIndexPage() {
+  const { userId } = await auth();
+  // const { articles, sites } = await getData(user.id);
+  console.log(userId);
   return (
     <div>
-      <h1 className="text-2xl font-semibold mb-5">Your Listings</h1>
-
-      {listings.length > 0 ? (
+      <h1 className="text-2xl font-semibold mb-5">Your Sites</h1>
+      {/* {sites.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-          {listings.map((listing) => (
-            <Card key={listing.id}>
+          {sites.map((item) => (
+            <Card key={item.id}>
               <Image
-                src={listing.imageUrl ?? DefaultImage}
-                alt={listing.name}
+                src={item.imageUrl ?? Defaultimage}
+                alt={item.name}
                 className="rounded-t-lg object-cover w-full h-[200px]"
                 width={400}
                 height={200}
               />
               <CardHeader>
-                <CardTitle className="truncate">{listing.name}</CardTitle>
+                <CardTitle className="truncate">{item.name}</CardTitle>
                 <CardDescription className="line-clamp-3">
-                  {listing.description}
+                  {item.description}
                 </CardDescription>
               </CardHeader>
+
               <CardFooter>
                 <Button asChild className="w-full">
-                  <Link href={`/dashboard/sites/${listing.id}`}>
+                  <Link href={`/dashboard/sites/${item.id}`}>
                     View Articles
                   </Link>
                 </Button>
@@ -81,36 +77,35 @@ export default async function DashboardIndexPage({}) {
         </div>
       ) : (
         <EmptyState
-          title="You don't have any listings yet."
+          title="You dont have any sites created"
+          description="You currently dont have any Sites. Please create some so that you can see them right here."
           href="/dashboard/sites/new"
-          description="You currently dont have any listings. Please create one when you are ready."
-          buttonText="Create Listing"
+          buttonText="Create Site"
         />
       )}
-      <h1 className="text-2xl font-semibold mb-5 mt-10">Recent Articles</h1>
 
+      <h1 className="text-2xl mt-10 font-semibold mb-5">Recent Articles</h1>
       {articles.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-          {articles.map((article) => (
-            <Card key={article.id}>
+          {articles.map((item) => (
+            <Card key={item.id}>
               <Image
-                src={article.image ?? DefaultImage}
-                alt={article.title}
+                src={item.image ?? Defaultimage}
+                alt={item.title}
                 className="rounded-t-lg object-cover w-full h-[200px]"
                 width={400}
                 height={200}
               />
               <CardHeader>
-                <CardTitle className="truncate">{article.title}</CardTitle>
+                <CardTitle className="truncate">{item.title}</CardTitle>
                 <CardDescription className="line-clamp-3">
-                  {article.smallDescription}
+                  {item.smallDescription}
                 </CardDescription>
               </CardHeader>
+
               <CardFooter>
                 <Button asChild className="w-full">
-                  <Link
-                    href={`/dashboard/sites/${article.listingId}/${article.id}`}
-                  >
+                  <Link href={`/dashboard/sites/${item.siteId}/${item.id}`}>
                     Edit Article
                   </Link>
                 </Button>
@@ -120,12 +115,12 @@ export default async function DashboardIndexPage({}) {
         </div>
       ) : (
         <EmptyState
-          title="You don't have any articles yet."
-          href="/dashboard/sites"
-          description="You currently dont have any articles. Please create one when you are ready."
+          title="You dont have any articles created"
+          description="Your currently dont have any articles created. Please create some so that you can see them right here"
           buttonText="Create Article"
+          href="/dashboard/sites"
         />
-      )}
+      )} */}
     </div>
   );
 }
