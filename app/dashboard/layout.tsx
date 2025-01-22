@@ -3,7 +3,6 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import Logo from "@/public/logo.svg";
 import { DashboardItems } from "../components/dashboard/DashboardItems";
-import { DollarSign, Globe, Home } from "lucide-react";
 
 // import {
 //   DropdownMenu,
@@ -14,20 +13,6 @@ import { DollarSign, Globe, Home } from "lucide-react";
 // import { Button } from "@/components/ui/button";
 // import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { UserButton } from "@clerk/nextjs";
-
-// export const navLinks = [
-//   {
-//     name: "Dashboard",
-//     href: "/dashboard",
-//     icon: Home,
-//   },
-//   {
-//     name: "Sites",
-//     href: "/dashboard/sites",
-//     icon: Globe,
-//   },
-//   { name: "Pricing", href: "/dashboard/pricing", icon: DollarSign },
-// ];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
