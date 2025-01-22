@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ReactNode } from "react";
 import Logo from "@/public/logo.svg";
-import { DashboardItems } from "../components/dashboard/DashboardItems";
+// import { DashboardItems } from "../components/dashboard/DashboardItems";
 
 // import {
 //   DropdownMenu,
@@ -29,7 +29,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 font-medium lgp:px-4">
-              <DashboardItems />
+              {/* <DashboardItems /> */}
             </nav>
           </div>
         </div>
