@@ -6,7 +6,7 @@
 //   CardTitle,
 // } from "@/components/ui/card";
 // import { EmptyState } from "../components/dashboard/EmptyState";
-import { prisma } from "@/lib/prisma";
+// import { prisma } from "@/lib/prisma";
 // import { requireUser } from "../utils/requireUser";
 // import SitesRoute from "./sites/page";
 // import Image from "next/image";
@@ -15,30 +15,30 @@ import { prisma } from "@/lib/prisma";
 // import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 
-async function getData(userId: string) {
-  const [sites, articles] = await Promise.all([
-    prisma.site.findMany({
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 3,
-    }),
-    prisma.post.findMany({
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 3,
-    }),
-  ]);
+// async function getData(userId: string) {
+//   const [sites, articles] = await Promise.all([
+//     prisma.site.findMany({
+//       where: {
+//         userId: userId,
+//       },
+//       orderBy: {
+//         createdAt: "desc",
+//       },
+//       take: 3,
+//     }),
+//     prisma.post.findMany({
+//       where: {
+//         userId: userId,
+//       },
+//       orderBy: {
+//         createdAt: "desc",
+//       },
+//       take: 3,
+//     }),
+//   ]);
 
-  return { sites, articles };
-}
+//   return { sites, articles };
+// }
 
 export default async function DashboardIndexPage() {
   const { userId } = await auth();

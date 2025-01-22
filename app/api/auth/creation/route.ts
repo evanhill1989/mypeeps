@@ -24,7 +24,7 @@ export async function GET() {
         firstName: user.firstName ?? "",
         lastName: user.lastName ?? "",
         profileImage: user.imageUrl ?? "",
-        customerId: null, // Optionally populate this if using Stripe
+        // customerId: null,  Optionally populate this if using Stripe
       },
     });
   }
@@ -32,7 +32,7 @@ export async function GET() {
   // Redirect the user to the dashboard
   return NextResponse.redirect(
     process.env.NODE_ENV === "production"
-      ? "https://blog-marshal.vercel.app/dashboard"
+      ? "https://mypeeps.vercel.app/dashboard"
       : "http://localhost:3000/dashboard"
   );
 }

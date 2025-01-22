@@ -1,7 +1,3 @@
-import Image from "next/image";
-
-import { Button } from "@/components/ui/button";
-
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 
